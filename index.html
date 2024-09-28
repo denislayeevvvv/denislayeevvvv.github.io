@@ -28,7 +28,6 @@
             transition: opacity 0.5s ease-in-out;
             position: absolute;
             z-index: -1;
-            visibility: hidden;
         }
 
         .visible {
@@ -150,20 +149,21 @@
     </div>
 
     <script>
-        // Function to switch pages with smooth fade effect
+        // Function to switch pages with fade effect
         function switchPage(currentPage, nextPage) {
             const current = document.getElementById(currentPage);
             const next = document.getElementById(nextPage);
 
             // Fade out the current page
-            current.classList.remove('visible');
-            current.classList.add('hidden');
+            current.style.opacity = '0';
+            current.style.zIndex = '-1'; // Move it behind
 
-            // Delay the fade-in for the next page until the fade-out completes
+            // Start fading in the next page after a slight delay (500ms)
             setTimeout(() => {
-                current.style.visibility = 'hidden'; // Ensure it's completely hidden after fading out
-                next.classList.remove('hidden');
-                next.classList.add('visible');
+                current.style.visibility = 'hidden'; // Hide the current page after fade-out completes
+                next.style.visibility = 'visible'; // Make the next page visible
+                next.style.zIndex = '1'; // Bring the next page to the front
+                next.style.opacity = '1'; // Fade in the next page
             }, 500); // Duration of fade-out effect
         }
 
