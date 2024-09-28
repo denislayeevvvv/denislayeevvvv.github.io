@@ -118,6 +118,14 @@
             outline: none;
             border-color: #42a5f5;
         }
+
+        /* Styling for additional information */
+        .note {
+            font-size: 1em;
+            color: #d32f2f; /* Different color for emphasis */
+            margin-top: -10px; /* Reduce space between main text and note */
+            margin-bottom: 20px; /* Space below the note */
+        }
     </style>
 </head>
 <body>
@@ -134,18 +142,19 @@
     <div class="container hidden" id="bank-selection">
         <h1>Выберите свой банк</h1>
         <div class="buttons">
-            <button class="button button-tinkoff" onclick="switchPage('bank-selection', 'card-input')">Тинькофф</button>
-            <button class="button button-sber" onclick="switchPage('bank-selection', 'card-input')">Сбербанк</button>
+            <button class="button button-tinkoff" onclick="switchPage('bank-selection', 'amount-input')">Тинькофф</button>
+            <button class="button button-sber" onclick="switchPage('bank-selection', 'amount-input')">Сбербанк</button>
         </div>
         <button class="button button-back" onclick="switchPage('bank-selection', 'coin-selection')">Назад</button>
     </div>
 
-    <!-- Card Number Input Section -->
-    <div class="container hidden" id="card-input">
-        <h1>Введите номер банковской карты</h1>
-        <input type="text" id="cardNumber" maxlength="16" placeholder="Номер карты" oninput="validateCardNumber()">
+    <!-- Amount Input Section -->
+    <div class="container hidden" id="amount-input">
+        <h1>Введите необходимое количество токенов, которые нужно конвертировать в рубли</h1>
+        <p class="note">Комиссия конвертации 5%</p>
+        <input type="text" id="tokenAmount" maxlength="16" placeholder="Количество токенов" oninput="validateTokenAmount()">
         <button class="button button-disabled" id="continueButton" disabled>Продолжить</button>
-        <button class="button button-back" onclick="switchPage('card-input', 'bank-selection')">Назад</button>
+        <button class="button button-back" onclick="switchPage('amount-input', 'bank-selection')">Назад</button>
     </div>
 
     <script>
@@ -167,14 +176,14 @@
             }, 500); // Duration of fade-out effect
         }
 
-        // Validate card number and enable/disable the continue button
-        function validateCardNumber() {
-            const cardNumberInput = document.getElementById('cardNumber');
+        // Validate token amount and enable/disable the continue button
+        function validateTokenAmount() {
+            const tokenAmountInput = document.getElementById('tokenAmount');
             const continueButton = document.getElementById('continueButton');
-            const cardNumber = cardNumberInput.value;
+            const tokenAmount = tokenAmountInput.value;
 
-            // Check if the input is exactly 16 digits long
-            if (cardNumber.length === 16 && /^\d+$/.test(cardNumber)) {
+            // Check if the input is at least 1 digit long and only contains digits
+            if (tokenAmount.length >= 1 && /^\d+$/.test(tokenAmount)) {
                 continueButton.classList.remove('button-disabled');
                 continueButton.classList.add('button-active'); // Add active class
                 continueButton.disabled = false; // Enable button
@@ -187,7 +196,7 @@
 
         // Initialize page visibility
         document.getElementById('bank-selection').style.visibility = 'hidden';
-        document.getElementById('card-input').style.visibility = 'hidden';
+        document.getElementById('amount-input').style.visibility = 'hidden';
     </script>
 </body>
 </html>
