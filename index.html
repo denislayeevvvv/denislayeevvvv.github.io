@@ -22,15 +22,20 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 350px; /* Adjusted for consistent width */
+            max-width: 350px;
             width: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             position: absolute;
+            z-index: 1;
         }
 
         .visible {
             opacity: 1;
+        }
+
+        .hidden {
+            opacity: 0;
         }
 
         h1 {
@@ -119,7 +124,7 @@
     </div>
 
     <!-- Bank Selection Section -->
-    <div class="container" id="bank-selection">
+    <div class="container hidden" id="bank-selection">
         <h1>Выберите свой банк</h1>
         <div class="buttons">
             <button class="button button-tinkoff" onclick="switchPage('bank-selection', 'card-input')">Тинькофф</button>
@@ -129,7 +134,7 @@
     </div>
 
     <!-- Card Number Input Section -->
-    <div class="container" id="card-input">
+    <div class="container hidden" id="card-input">
         <h1>Введите номер банковской карты</h1>
         <input type="text" id="cardNumber" maxlength="16" placeholder="Номер карты" oninput="validateCardNumber()">
         <button class="button button-disabled" id="continueButton" disabled>Продолжить</button>
@@ -144,11 +149,13 @@
 
             // Fade out the current page
             current.classList.remove('visible');
+            current.classList.add('hidden');
             setTimeout(() => {
-                current.style.display = 'none';
+                current.style.zIndex = '-1'; // Ensure it's behind the next one
                 // Fade in the next page
-                next.style.display = 'block';
-                setTimeout(() => next.classList.add('visible'), 10); // Add slight delay for transition
+                next.style.zIndex = '1';
+                next.classList.remove('hidden');
+                next.classList.add('visible');
             }, 500); // Duration of fade-out effect
         }
 
@@ -169,10 +176,6 @@
                 continueButton.disabled = true; // Disable button
             }
         }
-
-        // Initialize page visibility
-        document.getElementById('bank-selection').style.display = 'none';
-        document.getElementById('card-input').style.display = 'none';
     </script>
 </body>
 </html>
