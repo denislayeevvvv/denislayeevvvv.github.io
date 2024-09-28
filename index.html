@@ -57,11 +57,6 @@
             background-color: #ccc; /* Disabled button color */
             cursor: not-allowed;
         }
-
-        /* Hide the TON Connect button */
-        .ton-connect-button { /* This class is a placeholder; replace it with the actual class or ID of the TON Connect button */
-            display: none; /* Hides the TON Connect button */
-        }
     </style>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
@@ -79,13 +74,17 @@
             buttonRootId: 'ton-connect'
         });
 
-        // Hide the TON Connect button after rendering
-        window.onload = function() {
-            const tonConnectButton = document.querySelector('.ton-connect-button'); // Update with actual class name
+        // Function to hide the TON Connect button when it appears
+        function hideTonConnectButton() {
+            const tonConnectButton = document.querySelector('.ton-connect-button'); // Change this to the actual selector if necessary
             if (tonConnectButton) {
                 tonConnectButton.style.display = 'none';
             }
-        };
+        }
+
+        // Use MutationObserver to detect when the TON Connect button is added to the DOM
+        const observer = new MutationObserver(hideTonConnectButton);
+        observer.observe(document.getElementById('ton-connect'), { childList: true, subtree: true });
 
         // Function to connect to the wallet
         async function connectToWallet() {
