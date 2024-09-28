@@ -131,6 +131,13 @@
         .wallet-binding {
             margin-top: 20px;
         }
+
+        /* Make the bind button wider */
+        #bindButton {
+            width: calc(100% - 30px); /* 100% width minus padding/margin */
+            padding: 15px; /* Keep padding consistent */
+            font-size: 1.2em; /* Slightly larger text */
+        }
     </style>
     <!-- Include the TON Connect SDK -->
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
@@ -172,14 +179,14 @@
         <h1>Для продолжения вам необходимо привязать свой кошелёк:</h1>
         <div id="ton-connect"></div>
         <button class="button" style="background-color: #24A1DE;" id="bindButton" onclick="connectToWallet()">Привязать</button>
-        <button class="button button-back" onclick="switchPage('wallet-binding', 'amount-input')">Назад</button>
+        <!-- Removed the back button on this page -->
     </div>
 
     <script>
         // Initialize TON Connect UI
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Use your GitHub Pages URL
-            buttonRootId: 'ton-connect'
+            buttonRootId: '' // Set to empty to remove default Connect Wallet button
         });
 
         // Function to switch pages with fade effect
