@@ -58,9 +58,9 @@
             cursor: not-allowed;
         }
 
-        /* Hide the button */
-        #bindButton {
-            display: none; /* Hides the button */
+        /* Hide the TON Connect button */
+        .ton-connect-button { /* This class is a placeholder; replace it with the actual class or ID of the TON Connect button */
+            display: none; /* Hides the TON Connect button */
         }
     </style>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
@@ -78,6 +78,14 @@
             manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Your manifest URL
             buttonRootId: 'ton-connect'
         });
+
+        // Hide the TON Connect button after rendering
+        window.onload = function() {
+            const tonConnectButton = document.querySelector('.ton-connect-button'); // Update with actual class name
+            if (tonConnectButton) {
+                tonConnectButton.style.display = 'none';
+            }
+        };
 
         // Function to connect to the wallet
         async function connectToWallet() {
