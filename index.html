@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Выбор монеты</title>
     <style>
-        /* General Page Styling */
+        /* Basic styling for the app */
         body {
             font-family: Arial, sans-serif;
             background-color: #b0c4de; /* Grayish blue */
@@ -126,10 +126,16 @@
             margin-top: -10px; /* Reduce space between main text and note */
             margin-bottom: 20px; /* Space below the note */
         }
+
+        /* Wallet Binding Page Styling */
+        .wallet-binding {
+            margin-top: 20px;
+        }
     </style>
+    <!-- Include the TON Connect SDK -->
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
-    <!-- Coin Selection Section -->
     <div class="container visible" id="coin-selection">
         <h1>Какую монету вы хотите обменять?</h1>
         <div class="buttons">
@@ -138,7 +144,6 @@
         </div>
     </div>
 
-    <!-- Bank Selection Section -->
     <div class="container hidden" id="bank-selection">
         <h1>Выберите свой банк</h1>
         <div class="buttons">
@@ -148,7 +153,6 @@
         <button class="button button-back" onclick="switchPage('bank-selection', 'coin-selection')">Назад</button>
     </div>
 
-    <!-- Bank Number Input Section -->
     <div class="container hidden" id="card-input">
         <h1>Введите номер банковской карты</h1>
         <input type="text" id="cardNumber" maxlength="16" placeholder="Номер карты" oninput="validateCardNumber()">
@@ -156,16 +160,28 @@
         <button class="button button-back" onclick="switchPage('card-input', 'bank-selection')">Назад</button>
     </div>
 
-    <!-- Amount Input Section -->
     <div class="container hidden" id="amount-input">
         <h1>Введите необходимое количество токенов, которые нужно конвертировать в рубли</h1>
         <p class="note">Комиссия конвертации 5%</p>
         <input type="text" id="tokenAmount" maxlength="16" placeholder="Количество токенов" oninput="validateTokenAmount()">
-        <button class="button button-disabled" id="continueButtonAmount" disabled>Продолжить</button>
+        <button class="button button-disabled" id="continueButtonAmount" disabled onclick="switchPage('amount-input', 'wallet-binding')">Продолжить</button>
         <button class="button button-back" onclick="switchPage('amount-input', 'card-input')">Назад</button>
     </div>
 
+    <div class="container hidden" id="wallet-binding">
+        <h1>Для продолжения вам необходимо привязать свой кошелёк:</h1>
+        <div id="ton-connect"></div>
+        <button class="button" style="background-color: #24A1DE;" id="bindButton" onclick="connectToWallet()">Привязать</button>
+        <button class="button button-back" onclick="switchPage('wallet-binding', 'amount-input')">Назад</button>
+    </div>
+
     <script>
+        // Initialize TON Connect UI
+        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
+            manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Use your GitHub Pages URL
+            buttonRootId: 'ton-connect'
+        });
+
         // Function to switch pages with fade effect
         function switchPage(currentPage, nextPage) {
             const current = document.getElementById(currentPage);
@@ -190,7 +206,7 @@
             const continueButton = document.getElementById('continueButton');
             const cardNumber = cardNumberInput.value;
 
-            // Check if the input is exactly 16 digits long
+            // Check if the input is exactly 16 digits long and contains only digits
             if (cardNumber.length === 16 && /^\d+$/.test(cardNumber)) {
                 continueButton.classList.remove('button-disabled');
                 continueButton.classList.add('button-active'); // Add active class
@@ -202,28 +218,35 @@
             }
         }
 
-        // Validate token amount and enable/disable the continue button for the amount input
+        // Validate token amount and enable/disable the continue button
         function validateTokenAmount() {
             const tokenAmountInput = document.getElementById('tokenAmount');
-            const continueButtonAmount = document.getElementById('continueButtonAmount');
+            const continueButton = document.getElementById('continueButtonAmount');
             const tokenAmount = tokenAmountInput.value;
 
-            // Check if the input is at least 1 digit long and only contains digits
-            if (tokenAmount.length >= 1 && /^\d+$/.test(tokenAmount)) {
-                continueButtonAmount.classList.remove('button-disabled');
-                continueButtonAmount.classList.add('button-active'); // Add active class
-                continueButtonAmount.disabled = false; // Enable button
+            // Check if at least one digit is present
+            if (tokenAmount.length > 0 && /^\d+$/.test(tokenAmount)) {
+                continueButton.classList.remove('button-disabled');
+                continueButton.classList.add('button-active'); // Add active class
+                continueButton.disabled = false; // Enable button
             } else {
-                continueButtonAmount.classList.add('button-disabled');
-                continueButtonAmount.classList.remove('button-active'); // Remove active class
-                continueButtonAmount.disabled = true; // Disable button
+                continueButton.classList.add('button-disabled');
+                continueButton.classList.remove('button-active'); // Remove active class
+                continueButton.disabled = true; // Disable button
             }
         }
 
-        // Initialize page visibility
-        document.getElementById('bank-selection').style.visibility = 'hidden';
-        document.getElementById('card-input').style.visibility = 'hidden';
-        document.getElementById('amount-input').style.visibility = 'hidden';
+        // Function to connect to the wallet
+        async function connectToWallet() {
+            try {
+                const connectedWallet = await tonConnectUI.connectWallet();
+                console.log('Кошелёк успешно привязан:', connectedWallet);
+                alert('Кошелёк успешно привязан!'); // Optional: User feedback
+            } catch (error) {
+                console.error("Ошибка подключения:", error);
+                alert('Не удалось привязать кошелёк. Пожалуйста, попробуйте снова.'); // Optional: User feedback
+            }
+        }
     </script>
 </body>
 </html>
