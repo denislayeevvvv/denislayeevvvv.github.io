@@ -28,20 +28,10 @@
             margin: 10px 0;
             font-size: 16px;
         }
-        .button-active {
-            background-color: #42a5f5;
-            color: white;
-        }
-        .button-disabled {
-            background-color: #ccc;
-            color: #666;
-            cursor: not-allowed;
-        }
         #connectButton {
             background-color: #24A1DE; /* Custom color */
             color: white;
             width: calc(100% - 20px); /* Make it wider */
-            display: none; /* Hide the button */
         }
     </style>
     <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
@@ -61,8 +51,6 @@
 
         // Function to connect to the wallet
         async function connectToWallet() {
-            const connectButton = document.getElementById('connectButton');
-            connectButton.style.display = 'none'; // Hide button before connection attempt
             try {
                 console.log("Attempting to connect to wallet...");
                 const connectedWallet = await tonConnectUI.connectWallet();
@@ -71,15 +59,8 @@
             } catch (error) {
                 console.error("Ошибка подключения:", error);
                 alert('Не удалось привязать кошелёк. Пожалуйста, попробуйте снова.'); // Optional: User feedback
-            } finally {
-                connectButton.style.display = 'block'; // Optionally show it again after connection attempt
             }
         }
-
-        // Automatically attempt to connect when the page loads
-        window.onload = () => {
-            connectToWallet();
-        };
     </script>
 </body>
 </html>
