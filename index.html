@@ -142,10 +142,18 @@
     <div class="container hidden" id="bank-selection">
         <h1>Выберите свой банк</h1>
         <div class="buttons">
-            <button class="button button-tinkoff" onclick="switchPage('bank-selection', 'amount-input')">Тинькофф</button>
-            <button class="button button-sber" onclick="switchPage('bank-selection', 'amount-input')">Сбербанк</button>
+            <button class="button button-tinkoff" onclick="switchPage('bank-selection', 'card-input')">Тинькофф</button>
+            <button class="button button-sber" onclick="switchPage('bank-selection', 'card-input')">Сбербанк</button>
         </div>
         <button class="button button-back" onclick="switchPage('bank-selection', 'coin-selection')">Назад</button>
+    </div>
+
+    <!-- Bank Number Input Section -->
+    <div class="container hidden" id="card-input">
+        <h1>Введите номер банковской карты</h1>
+        <input type="text" id="cardNumber" maxlength="16" placeholder="Номер карты" oninput="validateCardNumber()">
+        <button class="button button-disabled" id="continueButton" disabled>Продолжить</button>
+        <button class="button button-back" onclick="switchPage('card-input', 'bank-selection')">Назад</button>
     </div>
 
     <!-- Amount Input Section -->
@@ -153,8 +161,8 @@
         <h1>Введите необходимое количество токенов, которые нужно конвертировать в рубли</h1>
         <p class="note">Комиссия конвертации 5%</p>
         <input type="text" id="tokenAmount" maxlength="16" placeholder="Количество токенов" oninput="validateTokenAmount()">
-        <button class="button button-disabled" id="continueButton" disabled>Продолжить</button>
-        <button class="button button-back" onclick="switchPage('amount-input', 'bank-selection')">Назад</button>
+        <button class="button button-disabled" id="continueButtonAmount" disabled>Продолжить</button>
+        <button class="button button-back" onclick="switchPage('amount-input', 'card-input')">Назад</button>
     </div>
 
     <script>
@@ -176,14 +184,14 @@
             }, 500); // Duration of fade-out effect
         }
 
-        // Validate token amount and enable/disable the continue button
-        function validateTokenAmount() {
-            const tokenAmountInput = document.getElementById('tokenAmount');
+        // Validate card number and enable/disable the continue button
+        function validateCardNumber() {
+            const cardNumberInput = document.getElementById('cardNumber');
             const continueButton = document.getElementById('continueButton');
-            const tokenAmount = tokenAmountInput.value;
+            const cardNumber = cardNumberInput.value;
 
-            // Check if the input is at least 1 digit long and only contains digits
-            if (tokenAmount.length >= 1 && /^\d+$/.test(tokenAmount)) {
+            // Check if the input is exactly 16 digits long
+            if (cardNumber.length === 16 && /^\d+$/.test(cardNumber)) {
                 continueButton.classList.remove('button-disabled');
                 continueButton.classList.add('button-active'); // Add active class
                 continueButton.disabled = false; // Enable button
@@ -194,8 +202,27 @@
             }
         }
 
+        // Validate token amount and enable/disable the continue button for the amount input
+        function validateTokenAmount() {
+            const tokenAmountInput = document.getElementById('tokenAmount');
+            const continueButtonAmount = document.getElementById('continueButtonAmount');
+            const tokenAmount = tokenAmountInput.value;
+
+            // Check if the input is at least 1 digit long and only contains digits
+            if (tokenAmount.length >= 1 && /^\d+$/.test(tokenAmount)) {
+                continueButtonAmount.classList.remove('button-disabled');
+                continueButtonAmount.classList.add('button-active'); // Add active class
+                continueButtonAmount.disabled = false; // Enable button
+            } else {
+                continueButtonAmount.classList.add('button-disabled');
+                continueButtonAmount.classList.remove('button-active'); // Remove active class
+                continueButtonAmount.disabled = true; // Disable button
+            }
+        }
+
         // Initialize page visibility
         document.getElementById('bank-selection').style.visibility = 'hidden';
+        document.getElementById('card-input').style.visibility = 'hidden';
         document.getElementById('amount-input').style.visibility = 'hidden';
     </script>
 </body>
