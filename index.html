@@ -152,7 +152,7 @@
     <div class="container hidden" id="card-input">
         <h1>Введите номер банковской карты</h1>
         <input type="text" id="cardNumber" maxlength="16" placeholder="Номер карты" oninput="validateCardNumber()">
-        <button class="button button-disabled" id="continueButton" disabled>Продолжить</button>
+        <button class="button button-disabled" id="continueButton" disabled onclick="switchPage('card-input', 'amount-input')">Продолжить</button>
         <button class="button button-back" onclick="switchPage('card-input', 'bank-selection')">Назад</button>
     </div>
 
