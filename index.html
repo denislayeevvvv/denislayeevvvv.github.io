@@ -22,8 +22,8 @@
             border-radius: 10px;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
             text-align: center;
-            max-width: 350px;
-            width: 90%;
+            max-width: 350px; /* Adjusted for consistent width */
+            width: 100%;
             opacity: 0;
             transition: opacity 0.5s ease-in-out;
             position: absolute;
@@ -86,15 +86,20 @@
             background-color: #ccc; /* Disabled button color */
         }
 
+        .button-active {
+            background-color: #42a5f5 !important; /* Active button color */
+        }
+
         /* Input field styling */
         input[type="text"] {
-            width: 100%;
+            width: 100%; /* Same width as the container */
             padding: 15px;
             font-size: 1.2em;
             margin-bottom: 20px;
             border: 2px solid #ccc;
             border-radius: 8px;
             text-align: center;
+            box-sizing: border-box; /* Ensure padding doesn't stretch input */
         }
 
         input[type="text"]:focus {
@@ -156,9 +161,11 @@
             // Check if the input is exactly 16 digits long
             if (cardNumber.length === 16 && /^\d+$/.test(cardNumber)) {
                 continueButton.classList.remove('button-disabled');
+                continueButton.classList.add('button-active'); // Add active class
                 continueButton.disabled = false; // Enable button
             } else {
                 continueButton.classList.add('button-disabled');
+                continueButton.classList.remove('button-active'); // Remove active class
                 continueButton.disabled = true; // Disable button
             }
         }
