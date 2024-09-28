@@ -27,8 +27,6 @@
             cursor: pointer;
             margin: 10px 0;
             font-size: 16px;
-        }
-        #connectButton {
             background-color: #24A1DE; /* Custom color */
             color: white;
             width: calc(100% - 20px); /* Make it wider */
@@ -45,7 +43,7 @@
     <script>
         // Initialize TON Connect UI
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json',
+            manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Your manifest URL
             buttonRootId: 'ton-connect'
         });
 
@@ -61,6 +59,11 @@
                 alert('Не удалось привязать кошелёк. Пожалуйста, попробуйте снова.'); // Optional: User feedback
             }
         }
+
+        // Automatically attempt to connect when the page loads (if desired)
+        // window.onload = () => {
+        //     connectToWallet();
+        // };
     </script>
 </body>
 </html>
