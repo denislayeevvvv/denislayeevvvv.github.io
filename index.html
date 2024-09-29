@@ -11,32 +11,39 @@
             color: #ffffff;
             margin: 0;
             padding: 0;
+            height: 100vh;
+            overflow: hidden; /* Prevents scrolling */
             display: flex;
             flex-direction: column;
-            height: 100vh;
+            justify-content: center;
+            align-items: center;
         }
 
         .container {
             background-color: #1a1a1a;
             border-radius: 15px;
             padding: 20px;
-            max-width: 400px;
-            margin: 0 auto;
-            flex: 1;
+            width: 400px;
+            height: 500px; /* Fixed height to contain everything */
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Spreads the content out */
         }
 
         h1 {
             font-size: 24px;
+            margin-bottom: 10px;
         }
 
         .invite-option {
             background-color: #333333;
             border-radius: 10px;
-            margin: 10px 0;
-            padding: 15px;
+            padding: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 10px;
         }
 
         .invite-option img {
@@ -68,14 +75,16 @@
             background-color: #1a1a1a;
             border-radius: 10px;
             padding: 10px;
-            margin: 10px 0;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
 
         .friend-list {
             background-color: #333333;
             border-radius: 10px;
-            padding: 20px;
-            margin: 10px 0;
+            padding: 10px;
+            margin-bottom: 10px;
+            font-size: 14px;
         }
 
         .friend-list p {
@@ -89,7 +98,6 @@
             padding: 15px;
             border-radius: 10px;
             cursor: pointer;
-            margin-top: 10px;
             width: 100%;
         }
 
@@ -100,7 +108,7 @@
         .bottom-menu {
             background-color: #1a1a1a;
             padding: 10px 0;
-            position: fixed;
+            position: absolute;
             bottom: 0;
             width: 100%;
             display: flex;
@@ -120,7 +128,7 @@
             color: #6666ff;
         }
 
-        .icons img {
+        .bottom-menu img {
             width: 25px;
             height: 25px;
         }
