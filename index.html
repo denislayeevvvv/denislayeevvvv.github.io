@@ -192,10 +192,13 @@
     </div>
 
     <script>
-        // Initialize TON Connect UI
+        // Initialize TON Connect UI with Telegram Mini App redirection
         const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
             manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Use your GitHub Pages URL
-            buttonRootId: 'ton-connect'
+            buttonRootId: 'ton-connect',
+            uiOptions: {
+                twaReturnUrl: 'https://t.me/YOUR_APP_NAME' // Replace with your Telegram Mini App URL
+            }
         });
 
         // Function to switch pages with fade effect
