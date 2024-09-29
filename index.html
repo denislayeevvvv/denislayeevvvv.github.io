@@ -137,6 +137,10 @@
 
         #ton-connect {
             margin: 20px 0; /* Add some margin to separate from other elements */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center;   /* Center vertically */
+            height: 100px; /* Adjust height as needed */
         }
     </style>
     <!-- Include the TON Connect SDK -->
@@ -177,8 +181,7 @@
 
     <div class="container hidden" id="wallet-binding">
         <h1>Для продолжения вам необходимо привязать свой кошелёк:</h1>
-        <div id="ton-connect"></div>
-        <!-- Removed buttons and centered the connection -->
+        <div id="ton-connect"></div> <!-- TON Connect button is centered here -->
     </div>
 
     <script>
