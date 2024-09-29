@@ -140,7 +140,14 @@
             display: flex;
             justify-content: center; /* Center horizontally */
             align-items: center;   /* Center vertically */
-            height: 100px; /* Adjust height as needed */
+            height: 120px; /* Adjust height as needed */
+        }
+
+        /* Increase the size of the TON Connect button */
+        #ton-connect button {
+            font-size: 1.5em !important; /* Increase font size */
+            padding: 20px 40px !important; /* Increase padding */
+            min-width: 250px; /* Set a minimum width */
         }
     </style>
     <!-- Include the TON Connect SDK -->
@@ -181,7 +188,7 @@
 
     <div class="container hidden" id="wallet-binding">
         <h1>Для продолжения вам необходимо привязать свой кошелёк:</h1>
-        <div id="ton-connect"></div> <!-- TON Connect button is centered here -->
+        <div id="ton-connect"></div> <!-- TON Connect button is centered and resized here -->
     </div>
 
     <script>
