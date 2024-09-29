@@ -3,100 +3,154 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Привязать кошелёк</title>
+    <title>Пригласите друзей</title>
     <style>
-        /* Basic styling for the app */
         body {
             font-family: Arial, sans-serif;
-            background-color: #B0C4DE; /* Grayish blue */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            background-color: #000000;
+            color: #ffffff;
+            text-align: center;
+            padding: 20px;
         }
 
         .container {
-            background-color: white;
+            background-color: #1a1a1a;
+            border-radius: 15px;
             padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            max-width: 350px;
-            width: 100%;
-            transition: opacity 0.5s ease-in-out;
-            position: relative;
+            max-width: 400px;
+            margin: 0 auto;
         }
 
         h1 {
-            font-size: 1.5em;
-            margin-bottom: 20px;
-            color: #333;
+            font-size: 24px;
         }
 
-        .button {
-            padding: 15px 20px;
-            font-size: 1.1em;
-            border: none;
-            border-radius: 8px;
+        .invite-option {
+            background-color: #333333;
+            border-radius: 10px;
+            margin: 10px 0;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .invite-option img {
+            width: 50px;
+            height: 50px;
+        }
+
+        .invite-option div {
+            text-align: left;
+            margin-left: 10px;
+            flex: 1;
+        }
+
+        .invite-option button {
+            background-color: #6666ff;
             color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
             cursor: pointer;
-            margin: 5px 0;
-            background-color: #24A1DE; /* Custom color */
-            transition: transform 0.2s, box-shadow 0.2s;
-            width: 100%; /* Full width */
         }
 
-        .button:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Disable button styling */
-        .button-disabled {
-            background-color: #ccc; /* Disabled button color */
+        .invite-option button:disabled {
+            background-color: #4d4d4d;
             cursor: not-allowed;
         }
+
+        .referral-info {
+            background-color: #1a1a1a;
+            border-radius: 10px;
+            padding: 10px;
+            margin: 10px 0;
+        }
+
+        .friend-list {
+            background-color: #333333;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 10px 0;
+        }
+
+        .friend-list p {
+            color: #cccccc;
+        }
+
+        .invite-friend-button {
+            background-color: #4d4dff;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .invite-friend-button:hover {
+            background-color: #3333ff;
+        }
+
+        .icons {
+            font-size: 18px;
+            display: flex;
+            justify-content: space-around;
+            margin-top: 20px;
+        }
+
+        .icons span {
+            cursor: pointer;
+            padding: 10px;
+            border-radius: 50%;
+            background-color: #222222;
+        }
+
     </style>
-    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
 </head>
 <body>
+
     <div class="container">
-        <h1>Для продолжения вам необходимо привязать свой кошелёк:</h1>
-        <div id="ton-connect"></div>
-        <button class="button" id="bindButton" onclick="connectToWallet()">Привязать</button>
+        <h1>Пригласите друзей!</h1>
+        <p>Вы и ваш друг получите бонусы</p>
+
+        <div class="invite-option">
+            <img src="gift.png" alt="Gift Icon">
+            <div>
+                <p>Пригласить друга</p>
+                <p>💎 +0,1 для вас и вашего друга</p>
+            </div>
+            <button disabled>Пригласить</button>
+        </div>
+
+        <div class="invite-option">
+            <img src="premium.png" alt="Premium Icon">
+            <div>
+                <p>Пригласить друга с Telegram Premium</p>
+                <p>💎 +0,3 для вас и вашего друга</p>
+            </div>
+            <button disabled>Пригласить</button>
+        </div>
+
+        <div class="referral-info">
+            <p>Вы уже являетесь рефералом, приглашенным <strong>отец</strong> 🐺</p>
+        </div>
+
+        <div class="friend-list">
+            <p>Список ваших друзей (3)</p>
+            <p>Вы еще никого не пригласили</p>
+        </div>
+
+        <button class="invite-friend-button">Пригласить друга</button>
+
+        <div class="icons">
+            <span>🏷</span>
+            <span>🎮</span>
+            <span>🎁</span>
+            <span>👥</span>
+            <span>📋</span>
+        </div>
     </div>
 
-    <script>
-        // Initialize TON Connect UI
-        const tonConnectUI = new TON_CONNECT_UI.TonConnectUI({
-            manifestUrl: 'https://denislayeevvvv.github.io/tonconnect-manifest.json', // Your manifest URL
-            buttonRootId: 'ton-connect'
-        });
-
-        // Function to hide the TON Connect button when it appears
-        function hideTonConnectButton() {
-            const tonConnectButton = document.querySelector('.ton-connect-button'); // Change this to the actual selector if necessary
-            if (tonConnectButton) {
-                tonConnectButton.style.display = 'none';
-            }
-        }
-
-        // Use MutationObserver to detect when the TON Connect button is added to the DOM
-        const observer = new MutationObserver(hideTonConnectButton);
-        observer.observe(document.getElementById('ton-connect'), { childList: true, subtree: true });
-
-        // Function to connect to the wallet
-        async function connectToWallet() {
-            try {
-                const connectedWallet = await tonConnectUI.connectWallet();
-                console.log('Кошелёк успешно привязан:', connectedWallet);
-                alert('Кошелёк успешно привязан!'); // Optional: User feedback
-            } catch (error) {
-                console.error("Ошибка подключения:", error);
-                alert('Не удалось привязать кошелёк. Пожалуйста, попробуйте снова.'); // Optional: User feedback
-            }
-        }
-    </script>
 </body>
 </html>
